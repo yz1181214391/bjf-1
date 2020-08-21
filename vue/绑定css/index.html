@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue.js</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="vue-box">
+        <button v-on:click="changeColor = !changeColor" type="button">changeColor</button>
+        <button v-on:click="changeLength = !changeLength" type="button">changeLength</button>
+        <div v-bind:class="changeLength">
+            <h1 >Hellow world</h1>
+        </div>
+        
+    </div>
+</body>
+<script src="./app.js"></script>
+</html>
