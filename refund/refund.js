@@ -7,99 +7,116 @@ $(function(){
         datatype: "json",
         data:{"odDelid" : odDelid},
         success: function (data) {
-            console.log(data)
+            console.log(data);
+            $('.order-id').text(data[0].odDelid);//订单编号
             showGoods(data);
-            $('.orderTime').text(data[0].odTimeStr);
-            $('.payTime').text(data[0].odPayTimeStr);
-            $('.accomplishTime').text(data[0].odModifiedTimeStr);
-            barFunction();
         }
-    })  
-
+    });
+    
+    
     function showGoods(indentData){
         var str = '';
+        var str1 = '';
+            
         for(var i = 0;i < indentData.length; i++){
-            var str1 = '';
-            // for(var j=0;j<indentData[i].bjfOrderItems.length;j++){
-            //     str1 +='<div class="same-indent same-flex">'+
-            //                 '<div class="commodity-list same-flex">'+
-            //                     '<img class="commodity-img" src="'+indentData[i].bjfOrderItems[j].oiImage+'" alt="">'+
-            //                     '<div class="commodity-content">'+
-            //                          '<div>'+ indentData[i].bjfOrderItems[j].oiName+'</div>'+
-            //                          '<div>'+ indentData[i].bjfOrderItems[j].oiContent.substring(1,indentData[i].bjfOrderItems[j].oiContent.length-1)+'</div>'+
-            //                     '</div>'+
-            //                 '</div>'+
-            //                 '<div class="same-style unit-price">'+ indentData[i].bjfOrderItems[j].oiPrice+'</div>'+
-            //                 '<div class="same-style quantity">'+ indentData[i].bjfOrderItems[j].oiNum+'</div>'+
-            //             '</div>'
-            // };
-
-            str1 +='<div class="same-indent same-flex">'+
-                        '<div class="commodity-list same-flex">'+
-                            '<img class="commodity-img" src="'+indentData[i].oiImage+'" alt="">'+
-                            '<div class="commodity-content">'+
-                                '<div>'+ indentData[i].oiName+'</div>'+
-                                '<div>'+ indentData[i].oiContent.substring(1,indentData[i].oiContent.length-1)+'</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="same-style unit-price">'+ indentData[i].oiPrice+'</div>'+
-                        '<div class="same-style quantity">'+ indentData[i].oiNum+'</div>'+
-                    '</div>'
-            str +='<div class="indent-list" data-list='+ indentData[i].odDelid +'>'+
-                        '<div class="indent-detail-box same-flex">'+
-
-                            '<div class="same-flex">'+
-                                '<div class="indent-time">'+ indentData[i].odTimeStr+'</div>'+
-                                '<div>'+
-                                    '<span>订单编号:</span>'+
-                                    '<span>'+ indentData[i].odDelid+'</span>'+   
-                                '</div>'+
-                            '</div>'+
-                        '</div>'+
-                        '<div class="same-flex indent-list-box">'+
-                            '<div class="commodity-banner">'+str1+'</div>'+
-                            '<div class="same-flex sa">'+
-                                '<div class="same-style gross-amount">'+ indentData[i].odTotalAmount+'</div>'+
-                                '<div class="same-style"></div>'+//商品操作
-                                '<div class="same-style state">已支付</div>'+ //订单状态
-                                '<div class="same-style operation-btn">'+  //交易操作
-                                    // '<div class="handle confirm-receipt" data-confirm='+ indentData[i].odDelid +'>取消退货</div>'+
-                                '</div>'
-                            '</div>'+
-                        '</div>'+
-                    '</div>'
+            str1 +=`<div class="same-indent same-flex">
+                        <div class="commodity-list same-flex">
+                            <img class="commodity-img" src=${indentData[i].oiImage} alt="">
+                            <div class="commodity-content">
+                                <div>${indentData[i].oiName}</div>
+                                <div>${indentData[i].oiContent.substring(1,indentData[i].oiContent.length-1)}</div>
+                            </div>
+                        </div>
+                        <div class="same-style unit-price" id = price${i}> ${indentData[i].oiPrice}</div>
+                        <div class="same-style quantity" id = num${i}> ${indentData[i].oiNum}</div>
+                        <div class="same-style quantity"><input class="checkbox" id = check${i} type="checkbox" value="checkbox"/></div>
+                    </div>`
         };
+        str +='<div class="indent-list">'+
+                    '<div class="same-flex indent-list-box">'+
+                        '<div class="commodity-banner">'+str1+'</div>'+
+                        '<div class="same-flex sa">'+
+                            '<div class="same-style gross-amount">退款金额</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+      
         $('#content').html(str);
-       
-        // //取消退货事件
-        // $(".confirm-receipt").click(function () {
-        //   layer.confirm('确认取消退款退货？', {
-        //         btn: ['确认','取消'] //按钮
-        //     }, function(){ 
-        //         $.ajax({
-        //             url: "http://192.168.0.118:8080/order/notBack",
-        //             type: "GET",
-        //             datatype: "json",
-        //             data:{"odDelid" : odDelid},
-        //             success: function (data) {
-        //                 console.log(data)
-        //                 if(data == 1){
-        //                     layer.msg('取消成功', {icon: 1});
-        //                 }else{
-        //                     layer.msg('删除失败', {icon: 5});
-        //                 }
-        //             }
-        //         })  
-        //     });
-        // });
 
-        //点击评价按钮弹出评价框
-        $("#evaluate11").one("click",function(e){
-                let ev = e.target;
-                let evp = $(ev).parents()[3];
-                $(evp).after(txt);
-                evaFunction();
-        });
+        let accSub= (num1, num2) =>{
+            let r1, r2, m, n
+            try {
+            r1 = num1.toString().split('.')[1].length
+            } catch (e) {
+            r1 = 0
+            }
+            try {
+            r2 = num2.toString().split('.')[1].length
+            } catch (e) {
+            r2 = 0
+            }
+            m = Math.pow(10, Math.max(r1, r2))
+            n = (r1 >= r2) ? r1 : r2
+            return (Math.round(num1 * m - num2 * m) / m).toFixed(n)
+        };
+        let numAdd= (num1, num2)=> {
+        let baseNum, baseNum1, baseNum2
+        try {
+            baseNum1 = num1.toString().split('.')[1].length
+        } catch (e) {
+            baseNum1 = 0
+        }
+        try {
+            baseNum2 = num2.toString().split('.')[1].length
+        } catch (e) {
+            baseNum2 = 0
+        }
+        baseNum = Math.pow(10, Math.max(baseNum1, baseNum2))
+        return Math.round(num1 * baseNum + num2 * baseNum) / baseNum
+        };
+        setTimeout(()=>{
+            let len = $(".checkbox").length;
+            let sum = 0;
+            for(let j = 0;j<len;j++){
+                $(`#check${j}`).click(()=>{
+                    $.ajax({
+                        url: "",
+                        type: "GET",
+                        datatype: "json",
+                        data:{"odDelid" : odDelid
+                                },
+                        success: function (data) {
+                            console.log(data);
+                            if($(`#check${j}`).is(":checked")){
+                                sum = numAdd( sum,data);
+                                $('.gross-amount').text(parseFloat(sum));
+                            }else{
+                                sum =accSub(sum,data);
+                                $('.gross-amount').text(parseFloat(sum));
+                            }
+                        }
+                    });
+                })
+            }
+        },0)
+        // setTimeout(()=>{
+        //     let len = $(".checkbox").length;
+        //     let sum = 0;
+        //     for(let j = 0;j<len;j++){
+        //         $(`#check${j}`).click(()=>{
+        //             let price = $(`#price${j}`).text();
+        //             let num = $(`#num${j}`).text();
+        //             if($(`#check${j}`).is(":checked")){
+        //                 sum = numAdd( sum,(price*num));
+        //                 $('.gross-amount').text(parseFloat(sum));
+        //             }else{
+        //                 console.log(price*num);
+        //                 sum =accSub(sum,(price*num));
+        //                 $('.gross-amount').text(parseFloat(sum));
+        //             }
+        //         })
+        //     }
+        // },0)
     };
 
     // 退款退货框上传图片
@@ -144,7 +161,18 @@ $(function(){
                 }else{
                     layer.msg('提交失败', {icon: 5});
                 }
-            })
+            });
+            
+            $.ajax({
+                url: "",
+                type: "GET",
+                datatype: "json",
+                data:{"odDelid" : odDelid},
+                success: function (data) {
+                   
+                }
+            });
+
         }); 
     })
 
@@ -170,3 +198,4 @@ $(function(){
         } 
     };
 })
+

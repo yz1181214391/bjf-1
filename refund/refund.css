@@ -128,7 +128,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 120px;
+    width: 180px;
     border-left: 1px solid #e5e5e5;
     border-top: 1px solid #e5e5e5;
 }
@@ -157,7 +157,7 @@
     padding: 6px 0;
 }
 .same1{
-    width: 120px;
+    width: 180px;
     text-align: center;
 }
 .commodity-list1{

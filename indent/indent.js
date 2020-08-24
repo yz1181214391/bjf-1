@@ -20,7 +20,6 @@ $(function(){
     $(".indent").click(function(){
         $(".indent").removeClass("indent-focus");
         $(this).addClass("indent-focus");
-
         var index = $(this).index();
         console.log(index)
         var odStatus = '';
@@ -31,7 +30,7 @@ $(function(){
         }else if(index == 2){
             odStatus = 1;//待收货
         }else if(index == 3){
-            odStatus = 9;//待评价
+            odStatus = 8;//待评价
         };
         $.ajax({
             url: "http://192.168.0.118:8080/order/showOthers",
@@ -42,39 +41,7 @@ $(function(){
                     "page" : 1},
             success: function (data){
                 showGoods(data.list);
-                pageFunction(data,'http://192.168.0.118:8080/order/showOthers',odStatus)
-                // $('#pageLimit').bootstrapPaginator({ 
-                //     totalPages: data.totalPage,//共有多少页。
-                //     currentPage: data.currentpage,//当前的请求页面。
-                //     size:"normal",//分页符的大小
-                //     bootstrapMajorVersion: 3,//bootstrap的版本要求。
-                //     alignment:"left",
-                //     numberOfPages:6,//一页列出多少数据。
-                //     itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
-                //         switch (type) {
-                //             case "first": return "首页";
-                //             case "prev": return "上一页";
-                //             case "next": return "下一页";
-                //             case "last": return "末页";
-                //             case "page": return page;
-                //         }
-                //     },
-                //     onPageClicked: function(event, originalEvent, type, page){
-                //         console.log("page:"+page);
-                //         page1 = page;
-                //         $.ajax({
-                //             url: "http://192.168.0.118:8080/order/showOthers",
-                //             type: "GET",
-                //             datatype:"json",
-                //             data:{"status" : odStatus,
-                //                 "uid" : 1,
-                //                 "page":page1},
-                //             success: function (data){
-                //                 showGoods(data.list);
-                //             }
-                //         })
-                //     }
-                // });
+                pageFunction(data,'http://192.168.0.118:8080/order/showOthers',odStatus);  
             }
         }) 
     });
@@ -85,11 +52,7 @@ $(function(){
             var str1 = '';
             var str3 = '';
             for(var j=0;j<indentData[i].bjfOrderItems.length;j++){
-                // if(indentData[i].bjfOrderItems[j].oiSupport == 1){
-                //     str3 ='<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'  //商品操作
-                // };
                 str1 +='<div class="same-indent same-flex">'+
-                            // '<div class="support" style="display:none;">'+indentData[i].bjfOrderItems[j].oiSupport+'</div>'+
                             '<div class="commodity-list same-flex">'+
                                 '<img class="commodity-img" src="'+indentData[i].bjfOrderItems[j].oiImage+'" alt="">'+
                                 '<div class="commodity-content">'+
@@ -119,7 +82,15 @@ $(function(){
                             '<div class="same-style operation-btn">'+  //交易操作
                                 '<div class="handle confirm-receipt" data-confirm='+ indentData[i].odDelid +'>确认收货</div>'+
                             '</div>'
-                }else if(indentData[i].odStatus == '2'||'9'){       //已完成
+                }else if(indentData[i].odStatus == '2'){       //2已完成,9
+                    str2 = '<div class="same-style">'+
+                                // '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
+                            '</div>'+
+                            '<div class="same-style state">已完成</div>'+ //订单状态
+                            '<div class="same-style operation-btn">'+  //交易操作
+                                '<div id="evaluate11" class="handle" data-evaluate='+ indentData[i].odDelid +'>评价</div>'+
+                            '</div>'
+                }else if(indentData[i].odStatus == '9'){       //2已完成,9
                     str2 = '<div class="same-style">'+
                                 '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
                             '</div>'+
@@ -253,7 +224,7 @@ $(function(){
                         if(data == 1){
                             layer.msg('删除成功', {icon: 1});
                         }else {
-                        layer.msg('删除失败', {icon: 5});
+                            layer.msg('删除失败', {icon: 5});
                         }
                     }
                 })  
@@ -269,7 +240,7 @@ $(function(){
                     type: "GET",
                     datatype: "json",
                     data:{"odDelid" : confirmId,
-                            "id" : 3},
+                            "id" : 2},
                     success: function (data) {
                         console.log(data)
                         if(data == 1){
@@ -291,13 +262,13 @@ $(function(){
                     type: "GET",
                     datatype: "json",
                     data:{"odDelid" : cancelId,
-                            "id" : 2},
+                            "id" : 1},
                     success: function (data) {
                         console.log(data)
                         if(data == 1){
                             layer.msg('取消成功', {icon: 1});
                         }else{
-                        layer.msg('取消失败', {icon: 5});
+                            layer.msg('取消失败', {icon: 5});
                         }
                     }
                 })  
@@ -334,7 +305,6 @@ $(function(){
                 evaFunction();
         });
     };
-
 
     // 评价框
     var txt = '<div class="evaluate-box">'+
@@ -382,9 +352,8 @@ $(function(){
             });
         });
     };
-
+    //分页符插件
     function pageFunction(data,url,odStatus){
-        // var url = "url";
         $('#pageLimit').bootstrapPaginator({ 
             totalPages: data.totalPage,//共有多少页。
             currentPage: data.currentpage,//当前的请求页面。
@@ -412,8 +381,8 @@ $(function(){
                     type: "GET",
                     datatype:"json",
                     data:{"status" : odStatus,
-                        "uid" : 1,
-                        "page":page1},
+                          "uid" : 1,
+                          "page" : page1},
                     success: function (data){
                         showGoods(data.list);
                     }

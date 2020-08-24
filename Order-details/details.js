@@ -136,7 +136,10 @@ $(function(){
                         '<div class="same-flex indent-list-box">'+
                             '<div class="commodity-banner">'+str1+'</div>'+
                             '<div class="same-flex sa">'+
-                                '<div class="same-style gross-amount">'+ indentData[i].odTotalAmount+'</div>'+
+                                '<div class="same-style gross-amount">'+ 
+                                        '<div>￥'+ indentData[i].odTotalAmount+'</div>'+
+                                        '<div>(含运费:￥'+ indentData[i].mcDpfee+')</div>'+
+                                '</div>'+
                                 str2+
                             '</div>'+
                         '</div>'+
@@ -275,6 +278,5 @@ $(function(){
             activeFunction(1);
             activeFunction(2);
         } 
-    };
-   
+    }; 
 })
