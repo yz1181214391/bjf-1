@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>退款退货</title>
+    <title>评价详情页</title>
     <style type="text/css">
         html,body {margin: 0;padding: 0;height: 100%;width: 100%;}
         a {text-decoration: none;  color:inherit;}
@@ -23,15 +23,12 @@
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="./refund.css">
-    <!-- <link rel="stylesheet" href="../indent/indent.css"> -->
     <link rel="stylesheet" href="../css/index.css">
-    <!-- layer最新版本 CSS文件 -->
-    <link rel="stylesheet" href="../layer/mobile/need/layer.css">
+    <link rel="stylesheet" href="../evaluate/evaluate.css">
   
    
 </head>
 <body>
-
     <div class=" box">
         <!--    头部导航条-->
         <div class="header-box">
@@ -48,87 +45,45 @@
                 </div>
             </div>
         </div>
-            
-        <!--    商品信息展示-->
-        <div class="details-box">
-            <div class="details-title">退款退货详情</div>
-            <!-- <div class="details-list-box">
-                <div class="details-list">
-                    <div class="details-text">
-                        <div class="details-text-list1">1</div>
-                        <div class="details-text-list2">
-                            <div>申请退款退货</div>
-                            <div class="details-time orderTime"></div>
-                        </div>
-                    </div>
-                    <div class="details-border"></div>
-                </div>
 
-                <div class="details-list">
-                    <div class="details-text">
-                        <div class="details-text-list1">2</div>
-                        <div class="details-text-list2">
-                            <div>卖家处理</div>
-                            <div class="details-time payTime"></div>
-                        </div>
+        <!-- 评价详情 -->
+        <div class="evaluate-item-box">
+            <div class="evaluate-first-box same-flex">
+                <div class="item-box">
+                    <img src="../Img/mmexport1580082042896.jpg" alt="">
+                    <div>MacBook Pro 2019款 倒计时看不见哈丝丝</div>
+                </div>
+                <div class="comment-first-box">
+                    <div><span>初次评论：</span><span>不敢倒计时看不见哈丝丝哦啊发我号钓位</span></div>
+                    <!-- <div>2020-07-05   18：18</div> -->
+                    <div>
+                        <img src="../Img/mmexport1580082034804.jpg" alt="">
+                        <img src="../Img/mmexport1580082034804.jpg" alt="">
+                        <img src="../Img/mmexport1580082034804.jpg" alt="">
                     </div>
-                    <div class="details-border"></div>
+                    <div>2020-07-05   18：18</div>
+
+                    <div><span>商家回复：</span><span>不敢倒计时看不见哈丝丝哦啊发我号钓位</span></div>
+                    <div>2020-07-05   18：18</div>
                 </div>
-                <div class="details-list">
-                    <div class="details-text">
-                        <div class="details-text-list1">5</div>
-                        <div class="details-text-list2">
-                            <div>退款成功</div>
-                            <div class="details-time accomplishTime"></div>
-                        </div>
+                
+            </div>  
+            <div class="evaluate-box same-flex">
+                <div>
+                    <img src="../Img/mmexport1580082042896.jpg" alt="">
+                    <div>MacBook Pro 2019款</div>
+                </div>
+                <div>
+                    <textarea class="text-content" placeholder="请输入退款理由" name="reasion"></textarea>
+                    <div class="add-img-box same-flex">
+                        <input type="file" name="images" style="display:none" id="uploadfile" accept="image/*"/>
+                        <div id="father"  class="same-flex"><img src="../Img/addimg.jpeg" style="width: 52px; height: 52px;" id="image"/></div>
+                        <span>(最多添加3张图片)</span>
                     </div>
                 </div>
-            </div> -->
-    
-            
-    
-    
-            <div class="indent-right-box">
-                <div class="order-id-box">
-                    <span>订单编号:</span>
-                    <span class="order-id"></span>
-                </div>
-                <div class="indent-title-box same-flex">
-                    <div class="commodity-list1">商品</div>
-                    <div class="same1">单价(元)</div>
-                    <div class="same1">数量</div>
-                    <div class="same1">退货操作</div>
-                    <div class="same1">退款金额(元)</div>
-                    <!-- <div class="same1">交易状态</div> -->
-                    <!-- <div class="same1">交易操作</div> -->
-                </div>
-                <div id="content"></div>
-
-                <form action="http://192.168.0.118:8080/order/backOrder" method="post"  enctype="multipart/form-data" id="refund-form">
-                    <div class="evaluate-box">
-                        <div class="evaluate-content-box same-flex">
-                            <div>退款理由</div>
-                            <textarea class="text-content" placeholder="请输入退款理由" name="reasion"></textarea>
-                            <input class="refundId" name="odDelid" type="text" style="display: none;" value="">
-                            <input class="oiId" name="oiId" type="text" style="display: none;" value="">
-                        </div>
-                        <div class="evaluate-img-box same-flex">
-                            <div class="evaluate-img">添加图片</div>
-                            <div class="add-img-box same-flex">
-                                <!-- <div class="add-img">+</div> -->
-                                <input type="file" name="images" style="display:none" id="uploadfile" accept="image/*"/>
-                                <div id="father"  class="same-flex"><img src="../Img/addimg.jpeg" style="width: 52px; height: 52px;" id="image"/></div>
-                                <span>(最多添加3张图片)</span>
-                            </div>
-                        </div>
-                        <div class="evaluate-btn">提交</div>
-                    </div>
-                </form>
-
-
-            </div>
+            </div>  
         </div>
-        
+     
         <!--    尾部导航条-->
         <div class="bottem-nav-box">
           <div class="row clearfix bottem">
@@ -220,5 +175,5 @@
     <!--弹出框插件-->
     <script src="../layer/layer.js"></script>
     <script src="http://malsup.github.com/jquery.form.js"></script>
-    <script src="./refund.js"></script>
+    <script src="./evaluate.js"></script>
 </html>

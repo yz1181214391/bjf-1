@@ -65,57 +65,80 @@ $(function () {
       var str3 = '';
 
       for (var j = 0; j < indentData[i].bjfOrderItems.length; j++) {
-        str1 += '<div class="same-indent same-flex">' + '<div class="commodity-list same-flex">' + '<img class="commodity-img" src="' + indentData[i].bjfOrderItems[j].oiImage + '" alt="">' + '<div class="commodity-content">' + '<div>' + indentData[i].bjfOrderItems[j].oiName + '</div>' + '<div>' + indentData[i].bjfOrderItems[j].oiContent.substring(1, indentData[i].bjfOrderItems[j].oiContent.length - 1) + '</div>' + '</div>' + '</div>' + '<div class="same-style unit-price">' + indentData[i].bjfOrderItems[j].oiPrice + '</div>' + '<div class="same-style quantity">' + indentData[i].bjfOrderItems[j].oiNum + '</div>' + '</div>';
+        if (indentData[i].odStatus == 1 && 9) {
+          if (indentData[i].bjfOrderItems[j].oiSupport == 1) {
+            str3 = '<div class="consignee"  data-refund=' + indentData[i].odDelid + ' data-oiId=' + indentData[i].bjfOrderItems[j].oiId + '>退款/退货</div>';
+          }
+        }
+
+        ;
+        str1 += '<div class="same-indent same-flex">' + '<div class="commodity-list same-flex">' + '<img class="commodity-img" src="' + indentData[i].bjfOrderItems[j].oiImage + '" alt="">' + '<div class="commodity-content">' + '<div>' + indentData[i].bjfOrderItems[j].oiName + '</div>' + '<div>' + indentData[i].bjfOrderItems[j].oiContent.substring(1, indentData[i].bjfOrderItems[j].oiContent.length - 1) + '</div>' + '</div>' + '</div>' + '<div class="same-style unit-price">' + indentData[i].bjfOrderItems[j].oiPrice + '</div>' + '<div class="same-style quantity">' + indentData[i].bjfOrderItems[j].oiNum + '</div>' + '<div class="same-style refund">' + str3 + '</div>' + '</div>';
       }
 
       ;
 
       if (indentData[i].odStatus == '0') {
         //未付款
-        str2 = '<div class="same-style">' + '<div class="consignee"></div>' + //商品操作
-        '</div>' + '<div class="same-style state">待付款</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee"></div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">待付款</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '<div class="handle"  data-pay=' + indentData[i].odDelid + '>立即付款</div>' + '<div class="cancel"  data-cancel=' + indentData[i].odDelid + '>取消订单</div>' + '</div>';
       } else if (indentData[i].odStatus == '1') {
         //已付款
-        str2 = '<div class="same-style">' + '<div class="consignee" data-refund=' + indentData[i].odDelid + '>退款/退货</div>' + //商品操作
-        '</div>' + '<div class="same-style state">已支付</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">已支付</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '<div class="handle confirm-receipt" data-confirm=' + indentData[i].odDelid + '>确认收货</div>' + '</div>';
       } else if (indentData[i].odStatus == '2') {
         //2已完成,9
-        str2 = '<div class="same-style">' + // '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
-        '</div>' + '<div class="same-style state">已完成</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     // '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">已完成</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '<div id="evaluate11" class="handle" data-evaluate=' + indentData[i].odDelid + '>评价</div>' + '</div>';
       } else if (indentData[i].odStatus == '9') {
         //2已完成,9
-        str2 = '<div class="same-style">' + '<div class="consignee" data-refund=' + indentData[i].odDelid + '>退款/退货</div>' + //商品操作
-        '</div>' + '<div class="same-style state">已完成</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee" data-refund='+ indentData[i].odDelid +'>退款/退货</div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">已完成</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '<div id="evaluate11" class="handle" data-evaluate=' + indentData[i].odDelid + '>评价</div>' + '</div>';
       } else if (indentData[i].odStatus == '3') {
         //已取消(取消的订单)
-        str2 = '<div class="same-style">' + '<div class="consignee">再次购买</div>' + //商品操作
-        '</div>' + '<div class="same-style state">已取消</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee">再次购买</div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">已取消</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '</div>';
       } else if (indentData[i].odStatus == '4') {
         //退款成功
-        str2 = '<div class="same-style">' + '<div class="consignee"></div>' + //商品操作
-        '</div>' + '<div class="same-style state">退款成功</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee"></div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">退款成功</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '</div>';
       } else if (indentData[i].odStatus == '5') {
         //待退款
-        str2 = '<div class="same-style">' + '<div class="consignee"></div>' + //商品操作
-        '</div>' + '<div class="same-style state">待退款</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee"></div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">待退款</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '<div class="handle cancel-return" data-confirm=' + indentData[i].odDelid + '>取消退货</div>' + '</div>';
       } else if (indentData[i].odStatus == '6') {
         //退款失败
-        str2 = '<div class="same-style">' + '<div class="consignee"></div>' + //商品操作
-        '</div>' + '<div class="same-style state">退款失败</div>' + //订单状态
+        str2 = // '<div class="same-style">'+
+        //     '<div class="consignee"></div>'+  //商品操作
+        // '</div>'+
+        '<div class="same-style state">退款失败</div>' + //订单状态
         '<div class="same-style operation-btn">' + //交易操作
         '</div>';
       }
@@ -134,6 +157,7 @@ $(function () {
     var cancelId = "";
     var evaluateId = "";
     var confirmId = "";
+    var cargoId = "";
     $('.indent-list').click(function (e) {
       var event = e || window.event; // 兼容性处理
 
@@ -143,6 +167,8 @@ $(function () {
 
       console.log(event.target.getAttribute('data-refund'), "退款退货");
       refundId = event.target.getAttribute('data-refund');
+      cargoId = event.target.getAttribute('data-oiId');
+      console.log(cargoId, "退款oiId");
       console.log(event.target.getAttribute('data-delete'), "删除按钮");
       deleteId = event.target.getAttribute('data-delete');
       console.log(event.target.getAttribute('data-cancel'), "取消订单");
@@ -164,8 +190,10 @@ $(function () {
     $(".consignee").click(function () {
       setTimeout(function () {
         var odDelid = refundId;
-        console.log("refundId:" + refundId);
-        window.top.location.href = '../refund/refund.html?id=' + odDelid;
+        var oiId = cargoId;
+        console.log("refundId:" + odDelid);
+        console.log("oiId:" + oiId);
+        window.top.location.href = '../refund/refund.html?id=' + odDelid + '=' + oiId;
       }, 0);
     }); //删除订单事件
 
@@ -240,7 +268,7 @@ $(function () {
           datatype: "json",
           data: {
             "odDelid": cancelId,
-            "id": 1
+            "id": 3
           },
           success: function success(data) {
             console.log(data);

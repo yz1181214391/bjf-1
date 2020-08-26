@@ -214,15 +214,7 @@
     padding: 0 22px;
     align-items: center;
 }
-.add-img{
-    width: 54px;
-	height: 54px;
-    background-color: #cccccc;
-    text-align: center;
-    line-height: 54px;
-    font-size: 32px;
-    color: #ffffff;
-}
+
 .evaluate-btn{
     float: right;
     margin-top: 12px;

@@ -1,48 +1,80 @@
 $(function(){
     var odDelid = window.location.href.split("=")[1];
+    var oiId = window.location.href.split("=")[2];
     $('.refundId').val(odDelid);
+    $('.oiId').val(oiId);
     $.ajax({
         url: "http://192.168.0.118:8080/order/showBack",
         type: "GET",
         datatype: "json",
-        data:{"odDelid" : odDelid},
+        async:false,
+        data:{  "odDelid" : odDelid,
+                "oiId" : oiId},
         success: function (data) {
             console.log(data);
-            $('.order-id').text(data[0].odDelid);//订单编号
+            $('.order-id').text(data.odDelid);//订单编号
             showGoods(data);
         }
     });
-    
-    
+
     function showGoods(indentData){
-        var str = '';
-        var str1 = '';
-            
-        for(var i = 0;i < indentData.length; i++){
-            str1 +=`<div class="same-indent same-flex">
-                        <div class="commodity-list same-flex">
-                            <img class="commodity-img" src=${indentData[i].oiImage} alt="">
-                            <div class="commodity-content">
-                                <div>${indentData[i].oiName}</div>
-                                <div>${indentData[i].oiContent.substring(1,indentData[i].oiContent.length-1)}</div>
+      let str =`<div class="indent-list">
+                    <div class="same-flex indent-list-box">
+                        <div class="commodity-banner">
+                            <div class="same-indent same-flex">
+                                <div class="commodity-list same-flex">
+                                    <img class="commodity-img" src=${indentData.oiImage} alt="">
+                                    <div class="commodity-content">
+                                        <div>${indentData.oiName}</div>
+                                        <div>${indentData.oiContent.substring(1,indentData.oiContent.length-1)}</div>
+                                    </div>
+                                </div>
+                                <div class="same-style unit-price" > ${indentData.oiPrice}</div>
+                                <div class="same-style quantity"> ${indentData.oiNum}</div>
+                                <div class="same-style quantity"><input  data-id="${indentData.oiId}" class="checkbox" type="checkbox" value="checkbox"/></div>
                             </div>
                         </div>
-                        <div class="same-style unit-price" id = price${i}> ${indentData[i].oiPrice}</div>
-                        <div class="same-style quantity" id = num${i}> ${indentData[i].oiNum}</div>
-                        <div class="same-style quantity"><input class="checkbox" id = check${i} type="checkbox" value="checkbox"/></div>
-                    </div>`
-        };
-        str +='<div class="indent-list">'+
-                    '<div class="same-flex indent-list-box">'+
-                        '<div class="commodity-banner">'+str1+'</div>'+
-                        '<div class="same-flex sa">'+
-                            '<div class="same-style gross-amount">退款金额</div>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'
+                        <div class="same-flex sa">
+                            <div class="same-style gross-amount">${indentData.backMoney}</div>
+                        </div>
+                    </div>
+                </div>`
       
         $('#content').html(str);
+    };
 
+    function showGoods1(indentData){
+        // var str = '';
+        // var str1 = '';
+        // console.log(indentData.length)
+        // for(var i = 0;i < indentData.length; i++){
+        //     str1 +=`<div class="same-indent same-flex">
+        //                 <div class="commodity-list same-flex">
+        //                     <img class="commodity-img" src=${indentData[i].oiImage} alt="">
+        //                     <div class="commodity-content">
+        //                         <div>${indentData[i].oiName}</div>
+        //                         <div>${indentData[i].oiContent.substring(1,indentData[i].oiContent.length-1)}</div>
+        //                     </div>
+        //                 </div>
+        //                 <div class="same-style unit-price" id = price${i}> ${indentData[i].oiPrice}</div>
+        //                 <div class="same-style quantity" id = num${i}> ${indentData[i].oiNum}</div>
+        //                 <div class="same-style quantity"><input  data-id="${indentData[i].oiId}" class="checkbox" id = check${i} type="checkbox" value="checkbox"/></div>
+        //             </div>`
+        // };
+        // str +='<div class="indent-list">'+
+        //             '<div class="same-flex indent-list-box">'+
+        //                 '<div class="commodity-banner">'+str1+'</div>'+
+        //                 '<div class="same-flex sa">'+
+        //                     '<div class="same-style gross-amount">退款金额</div>'+
+        //                 '</div>'+
+        //             '</div>'+
+        //         '</div>'
+      
+        // $('#content').html(str);
+    };
+    //退货操作
+    let sum = 0;
+    function test(){
         let accSub= (num1, num2) =>{
             let r1, r2, m, n
             try {
@@ -74,16 +106,22 @@ $(function(){
         baseNum = Math.pow(10, Math.max(baseNum1, baseNum2))
         return Math.round(num1 * baseNum + num2 * baseNum) / baseNum
         };
+        
         setTimeout(()=>{
             let len = $(".checkbox").length;
-            let sum = 0;
+            // let sum = 0;
+            
             for(let j = 0;j<len;j++){
                 $(`#check${j}`).click(()=>{
+                    let oiId = $(`#check${j}`).data().id; 
+                    console.log(oiId);
+                    console.log(odDelid);
                     $.ajax({
-                        url: "",
-                        type: "GET",
+                        url: "http://192.168.0.118:8080/order/showBackMoney",
+                        type: "post",
                         datatype: "json",
-                        data:{"odDelid" : odDelid
+                        data:{  "odDelid" : odDelid,
+                                "oiId" : oiId 
                                 },
                         success: function (data) {
                             console.log(data);
@@ -117,7 +155,8 @@ $(function(){
         //         })
         //     }
         // },0)
-    };
+    }
+
 
     // 退款退货框上传图片
     let num = 0;
@@ -126,9 +165,7 @@ $(function(){
             $("#uploadfile").click();
         });
         $("#uploadfile").change(function(){
-
             var files=$(this)[0].files[0];    //获取文件信息
-
             if(files)
             {
                 var reader=new FileReader();  //调用FileReader
@@ -151,28 +188,19 @@ $(function(){
 
     // 提交退款理由和照片
     $('.evaluate-btn').click(function(){
+        console.log('sum:'+sum);
+
         layer.confirm('确认提交吗？', {
             btn: ['确认','取消'] //按钮
         }, function(){ 
             $('#refund-form').ajaxSubmit(function(data){
                 if(data == 1){
                     layer.msg('提交成功', {icon: 1});
-                    window.history.back();
+                    // window.history.back();
                 }else{
                     layer.msg('提交失败', {icon: 5});
                 }
             });
-            
-            $.ajax({
-                url: "",
-                type: "GET",
-                datatype: "json",
-                data:{"odDelid" : odDelid},
-                success: function (data) {
-                   
-                }
-            });
-
         }); 
     })
 

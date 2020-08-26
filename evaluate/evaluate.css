@@ -1,0 +1,78 @@
+.evaluate-item-box{
+    width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    
+}
+.same-flex{
+    display: flex;
+    flex-direction: row;
+}
+.evaluate-first-box div:nth-child(1){
+    font-size: 16px;
+    color: #000000;
+}
+
+.evaluate-first-box div:nth-child(2) img{
+    width: 40px;
+    height: 40px;
+    margin: 8px;
+}
+.evaluate-first-box div:nth-child(4){
+    font-size: 16px;
+    color: #000000;
+}
+
+.item-box{
+    width: 160px;
+    height: 124px;
+    text-align: center;
+    margin: 24px;
+    background-color:#cccccc;
+}
+.item-box img{
+    width: 120px;
+    height: 86px;
+}
+.item-box div{
+    width: 160px;
+    height: 18px;
+    font-size: 14px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.comment-first-box{
+    margin-top: 32px;
+    background-color: aqua;
+}
+
+.evaluate-box{
+    width: 800px;
+    height: 200px;
+    border: 1px solid #cccccc;
+}
+.evaluate-box div:nth-child(1){
+    width: 200px;
+    height: 200px;
+    border-right: 1px solid #cccccc;
+    text-align: center;
+}
+.evaluate-box div:nth-child(1) img{
+    width: 120px;
+    height: 86px;
+    margin: 12px 0;
+}
+.text-content{
+    width: 600px;
+    height: 110px;
+    border: none;
+    outline:none;
+    padding:  22px
+}
+.add-img-box{
+    border-top: 1px solid #cccccc;
+    align-items: center;
+    padding: 15px 22px;
+}
