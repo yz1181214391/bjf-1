@@ -38,7 +38,7 @@ $(function(){
                         <div>${evaluateData[i].commodityName}</div>
                     </div>
                     <div class="item-list-box">
-                        <div  class="initial-box">
+                        <div style="display:none" class="initial-box">
                             <div class="initial-talk-box"><span>初次评论：</span><span>${ evaluateData[i].initialContent == '' ? '未写初评，可以在下面补充哦~' : evaluateData[i].initialContent}</span></div>
                             <div class="initial-img-box">${str2} </div>
                             <div class="initial-talk-box"><span>商家回复：</span><span>${evaluateData[i].merchantContent == '' ? '商家未回复' : evaluateData[i].merchantContent}</span></div>
@@ -52,10 +52,14 @@ $(function(){
                                 </div>
                                 <span>(最多添加3张图片)</span>
                             </div>
+                            <div class="choose-evaluate">评价:
+                                <label><input type="radio" name="sex" value="好评" checked="checked">好评</label>
+                                <label><input type="radio" name="sex" value="差评">差评</label>
+                            </div>  
                         </div> 
                     </div>
                 </div> `; 
-        $('.initial-img-box').html(str2);
+        // $('.initial-img-box').html(str2);
         $('.ya-box').html(str);
 
     };
@@ -103,22 +107,16 @@ $(function(){
       });
 
 
-    var evaluateData2 = [
-        {textVal:'',Img:''}
-    ]
+    
     $('.submit-btn').click(function(){
         let text = $('.text-content');
         let Img = $('.img-box').eq(index).children();
-        console.log(Img.eq(0)[0].src)
-        // console.log(Img.eq(1)[0])
-        // console.log(Img.eq(2)[0])
-        console.log()
         for(var t = 0;t<evaluateData.length; t++){
             
           var  evaluateText = $('.text-content').eq(t).val();
-        //   var  evaluatImg = Img.eq(t).value;
+          var  evaluatImg = Img.eq(t).attr('src')
           evaluateData[t].comment = evaluateText
-        //   evaluateData[t].images = evaluatImg
+          evaluateData[t].images = evaluatImg
           
 
         }

@@ -36,8 +36,8 @@ $(function () {
     }
 
     ;
-    str += "<div class=\"same-flex evaluate-list-box\">\n                    <div class=\"item-box\">\n                        <img src=".concat(evaluateData[i].commodityImg, " alt=\"\">\n                        <div>").concat(evaluateData[i].commodityName, "</div>\n                    </div>\n                    <div class=\"item-list-box\">\n                        <div  class=\"initial-box\">\n                            <div class=\"initial-talk-box\"><span>\u521D\u6B21\u8BC4\u8BBA\uFF1A</span><span>").concat(evaluateData[i].initialContent == '' ? '未写初评，可以在下面补充哦~' : evaluateData[i].initialContent, "</span></div>\n                            <div class=\"initial-img-box\">").concat(str2, " </div>\n                            <div class=\"initial-talk-box\"><span>\u5546\u5BB6\u56DE\u590D\uFF1A</span><span>").concat(evaluateData[i].merchantContent == '' ? '商家未回复' : evaluateData[i].merchantContent, "</span></div>\n                        </div>\n                        <div class=\"evaluate-box\">\n                            <textarea class=\"text-content\" placeholder=\"\u8BF7\u8F93\u5165\u4F7F\u7528\u611F\u53D7\" name=\"reasion\"></textarea>\n                            <div class=\"same-flex add-img-box\">\n                                <input type=\"file\" name=\"images\" style=\"display:none\" class=\"uploadfile\" accept=\"image/*\"/>\n                                <div class=\"same-flex img-box\">\n                                    <img src=\"../Img/addimg.jpeg\" style=\"width: 52px; height: 52px;\" data-leaves=").concat(i, " class=\"image\"/>\n                                </div>\n                                <span>(\u6700\u591A\u6DFB\u52A03\u5F20\u56FE\u7247)</span>\n                            </div>\n                        </div> \n                    </div>\n                </div> ");
-    $('.initial-img-box').html(str2);
+    str += "<div class=\"same-flex evaluate-list-box\">\n                    <div class=\"item-box\">\n                        <img src=".concat(evaluateData[i].commodityImg, " alt=\"\">\n                        <div>").concat(evaluateData[i].commodityName, "</div>\n                    </div>\n                    <div class=\"item-list-box\">\n                        <div style=\"display:none\" class=\"initial-box\">\n                            <div class=\"initial-talk-box\"><span>\u521D\u6B21\u8BC4\u8BBA\uFF1A</span><span>").concat(evaluateData[i].initialContent == '' ? '未写初评，可以在下面补充哦~' : evaluateData[i].initialContent, "</span></div>\n                            <div class=\"initial-img-box\">").concat(str2, " </div>\n                            <div class=\"initial-talk-box\"><span>\u5546\u5BB6\u56DE\u590D\uFF1A</span><span>").concat(evaluateData[i].merchantContent == '' ? '商家未回复' : evaluateData[i].merchantContent, "</span></div>\n                        </div>\n                        <div class=\"evaluate-box\">\n                            <textarea class=\"text-content\" placeholder=\"\u8BF7\u8F93\u5165\u4F7F\u7528\u611F\u53D7\" name=\"reasion\"></textarea>\n                            <div class=\"same-flex add-img-box\">\n                                <input type=\"file\" name=\"images\" style=\"display:none\" class=\"uploadfile\" accept=\"image/*\"/>\n                                <div class=\"same-flex img-box\">\n                                    <img src=\"../Img/addimg.jpeg\" style=\"width: 52px; height: 52px;\" data-leaves=").concat(i, " class=\"image\"/>\n                                </div>\n                                <span>(\u6700\u591A\u6DFB\u52A03\u5F20\u56FE\u7247)</span>\n                            </div>\n                            <div class=\"choose-evaluate\">\u8BC4\u4EF7:\n                                <label><input type=\"radio\" name=\"sex\" value=\"\u597D\u8BC4\" checked=\"checked\">\u597D\u8BC4</label>\n                                <label><input type=\"radio\" name=\"sex\" value=\"\u5DEE\u8BC4\">\u5DEE\u8BC4</label>\n                            </div>  \n                        </div> \n                    </div>\n                </div> "); // $('.initial-img-box').html(str2);
+
     $('.ya-box').html(str);
   }
 
@@ -80,22 +80,15 @@ $(function () {
       }
     });
   });
-  var evaluateData2 = [{
-    textVal: '',
-    Img: ''
-  }];
   $('.submit-btn').click(function () {
     var text = $('.text-content');
     var Img = $('.img-box').eq(index).children();
-    console.log(Img.eq(0)[0].src); // console.log(Img.eq(1)[0])
-    // console.log(Img.eq(2)[0])
-
-    console.log();
 
     for (var t = 0; t < evaluateData.length; t++) {
-      var evaluateText = $('.text-content').eq(t).val(); //   var  evaluatImg = Img.eq(t).value;
-
-      evaluateData[t].comment = evaluateText; //   evaluateData[t].images = evaluatImg
+      var evaluateText = $('.text-content').eq(t).val();
+      var evaluatImg = Img.eq(t).attr('src');
+      evaluateData[t].comment = evaluateText;
+      evaluateData[t].images = evaluatImg;
     }
 
     console.log(evaluateData); // console.log(text)

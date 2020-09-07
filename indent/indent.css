@@ -159,14 +159,22 @@
     font-weight: 400;
     color: #6c6c6c;
 }
+.consignee-box{
+    text-align: center;
+}
 .consignee{
-    color: #cfcccc;
+    color: #ffffff;
+    background-color: chocolate;
+    border-radius: 3px;
+    padding: 2px 4px;
     cursor: pointer;
     margin-top: 6px;
 }
 .consignee:hover{
     color: coral;
 }
+
+
 .handle{
     color: #ffffff;
     background-color: chocolate;
@@ -197,6 +205,14 @@
 }
 
 /* 评价框 */
+.evaluate{
+    color: #ffffff;
+    background-color: chocolate;
+    border-radius: 3px;
+    padding: 2px 4px;
+    cursor: pointer;
+}
+
 .evaluate-box{
     width: 1000px;
     height: 220px;
@@ -251,17 +267,5 @@
     text-align: center;
     line-height: 54px;
     font-size: 32px;
-    color: #ffffff;
-}
-.evaluate-btn{
-    float: right;
-    margin: 16px 0;
-    width: 105px;
-    height: 37px;
-    text-align: center;
-    line-height: 37px;
-	background-color: #009fe6;
-    border-radius: 3px;
-    font-size: 16px;
     color: #ffffff;
 }

@@ -3,6 +3,8 @@
 $(function () {
   var odDelid = window.location.href.split("=")[1];
   var oiId = window.location.href.split("=")[2];
+  console.log(odDelid);
+  console.log(oiId);
   $('.refundId').val(odDelid);
   $('.oiId').val(oiId);
   $.ajax({
@@ -23,7 +25,17 @@ $(function () {
   });
 
   function showGoods(indentData) {
-    var str = "<div class=\"indent-list\">\n                    <div class=\"same-flex indent-list-box\">\n                        <div class=\"commodity-banner\">\n                            <div class=\"same-indent same-flex\">\n                                <div class=\"commodity-list same-flex\">\n                                    <img class=\"commodity-img\" src=".concat(indentData.oiImage, " alt=\"\">\n                                    <div class=\"commodity-content\">\n                                        <div>").concat(indentData.oiName, "</div>\n                                        <div>").concat(indentData.oiContent.substring(1, indentData.oiContent.length - 1), "</div>\n                                    </div>\n                                </div>\n                                <div class=\"same-style unit-price\" > ").concat(indentData.oiPrice, "</div>\n                                <div class=\"same-style quantity\"> ").concat(indentData.oiNum, "</div>\n                                <div class=\"same-style quantity\"></div>\n                            </div>\n                        </div>\n                        <div class=\"same-flex sa\">\n                            <div class=\"same-style gross-amount\">").concat(indentData.backMoney, "</div>\n                        </div>\n                    </div>\n                </div>");
+    var str1 = '';
+
+    if (indentData.oiStatus === null) {
+      str1 = "<span>\u9000\u6B3E\u9000\u8D27</span>";
+    } else if (indentData.oiStatus === 0) {
+      str1 = "<span>\u9000\u6B3E\u4E2D</span>";
+    } else if (indentData.oiStatus === 2) {
+      str1 = "<span>\u9000\u6B3E\u5931\u8D25</span>";
+    }
+
+    var str = "<div class=\"indent-list\">\n                    <div class=\"same-flex indent-list-box\">\n                        <div class=\"commodity-banner\">\n                            <div class=\"same-indent same-flex\">\n                                <div class=\"commodity-list same-flex\">\n                                    <img class=\"commodity-img\" src=".concat(indentData.oiImage, " alt=\"\">\n                                    <div class=\"commodity-content\">\n                                        <div>").concat(indentData.oiName, "</div>\n                                        <div>").concat(indentData.oiContent.substring(1, indentData.oiContent.length - 1), "</div>\n                                    </div>\n                                </div>\n                                <div class=\"same-style unit-price\" > ").concat(indentData.oiPrice, "</div>\n                                <div class=\"same-style quantity\"> ").concat(indentData.oiNum, "</div>\n                                <div class=\"same-style quantity\">").concat(str1, "</div>\n                            </div>\n                        </div>\n                        <div class=\"same-flex sa\">\n                            <div class=\"same-style gross-amount\">").concat(indentData.backMoney, "</div>\n                        </div>\n                    </div>\n                </div>");
     $('#content').html(str);
   }
 

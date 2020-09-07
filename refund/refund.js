@@ -21,6 +21,14 @@ $(function(){
     });
 
     function showGoods(indentData){
+        let str1 = ''
+        if(indentData.oiStatus === null){
+            str1 =`<span>退款退货</span>`
+        }else if(indentData.oiStatus === 0){
+            str1 =`<span>退款中</span>`
+        }else if(indentData.oiStatus === 2){
+            str1 =`<span>退款失败</span>`
+        }
       let str =`<div class="indent-list">
                     <div class="same-flex indent-list-box">
                         <div class="commodity-banner">
@@ -34,7 +42,7 @@ $(function(){
                                 </div>
                                 <div class="same-style unit-price" > ${indentData.oiPrice}</div>
                                 <div class="same-style quantity"> ${indentData.oiNum}</div>
-                                <div class="same-style quantity"></div>
+                                <div class="same-style quantity">${str1}</div>
                             </div>
                         </div>
                         <div class="same-flex sa">
