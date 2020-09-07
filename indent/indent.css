@@ -162,6 +162,7 @@
 .consignee{
     color: #cfcccc;
     cursor: pointer;
+    margin-top: 6px;
 }
 .consignee:hover{
     color: coral;

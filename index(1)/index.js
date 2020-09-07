@@ -7,11 +7,11 @@ $(function () {
         location.href='../templates/a.html?key='+res;
     })
 })
-// 轮播图
+
+ // 左侧导航栏
 $(function(){
-    // 左侧导航栏
     $.ajax({
-        url: "http://192.168.0.124:8989/homePage/getTree",
+        url: "http://192.168.0.115:8080/homePage/getTree",
         type: "GET",
         datatype:"json",
         success: function(data) {

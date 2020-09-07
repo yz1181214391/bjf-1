@@ -54,7 +54,20 @@ $(function(){
             for(var j=0;j<indentData[i].bjfOrderItems.length;j++){
                 if(indentData[i].odStatus == 1 && 9){
                     if(indentData[i].bjfOrderItems[j].oiSupport == 1){
-                        str3 = '<div class="consignee"  data-refund='+ indentData[i].odDelid +' data-oiId='+ indentData[i].bjfOrderItems[j].oiId+'>退款/退货</div>';
+                        if(indentData[i].bjfOrderItems[j].oiStatus == null){
+                            str3 = '<div class="consignee"  data-refund='+ indentData[i].odDelid +' data-oiId='+ indentData[i].bjfOrderItems[j].oiId+'>退款/退货</div>';
+                        }else if(indentData[i].bjfOrderItems[j].oiStatus == 0){
+                            str3 = `<div>退款中</div>`
+                        }else if(indentData[i].bjfOrderItems[j].oiStatus == 1){
+                            str3 = `<div>退款成功</div>`
+                        }else if(indentData[i].bjfOrderItems[j].oiStatus == 2){
+                            str3 = '<div>'+
+                                        '<div>退款失败</div>'+
+                                        '<div class="consignee"  data-refund='+ indentData[i].odDelid +' data-oiId='+ indentData[i].bjfOrderItems[j].oiId+'>再次退款</div>'+
+                                    '</div>'
+                        }
+                    }else if(indentData[i].bjfOrderItems[j].oiSupport == 0){
+                        str3 = `<div>不可退商品</div>`
                     }
                 };
                 str1 +='<div class="same-indent same-flex">'+
@@ -306,6 +319,7 @@ $(function(){
                     type: "GET",
                     datatype: "json",
                     data:{"odDelid" : confirmId},
+                    
                     success: function (data) {
                         console.log(data)
                         if(data == 1){

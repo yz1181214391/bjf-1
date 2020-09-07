@@ -67,7 +67,17 @@ $(function () {
       for (var j = 0; j < indentData[i].bjfOrderItems.length; j++) {
         if (indentData[i].odStatus == 1 && 9) {
           if (indentData[i].bjfOrderItems[j].oiSupport == 1) {
-            str3 = '<div class="consignee"  data-refund=' + indentData[i].odDelid + ' data-oiId=' + indentData[i].bjfOrderItems[j].oiId + '>退款/退货</div>';
+            if (indentData[i].bjfOrderItems[j].oiStatus == null) {
+              str3 = '<div class="consignee"  data-refund=' + indentData[i].odDelid + ' data-oiId=' + indentData[i].bjfOrderItems[j].oiId + '>退款/退货</div>';
+            } else if (indentData[i].bjfOrderItems[j].oiStatus == 0) {
+              str3 = "<div>\u9000\u6B3E\u4E2D</div>";
+            } else if (indentData[i].bjfOrderItems[j].oiStatus == 1) {
+              str3 = "<div>\u9000\u6B3E\u6210\u529F</div>";
+            } else if (indentData[i].bjfOrderItems[j].oiStatus == 2) {
+              str3 = '<div>' + '<div>退款失败</div>' + '<div class="consignee"  data-refund=' + indentData[i].odDelid + ' data-oiId=' + indentData[i].bjfOrderItems[j].oiId + '>再次退款</div>' + '</div>';
+            }
+          } else if (indentData[i].bjfOrderItems[j].oiSupport == 0) {
+            str3 = "<div>\u4E0D\u53EF\u9000\u5546\u54C1</div>";
           }
         }
 
