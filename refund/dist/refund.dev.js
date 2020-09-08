@@ -27,7 +27,7 @@ $(function () {
   function showGoods(indentData) {
     var str1 = '';
 
-    if (indentData.oiStatus === null) {
+    if (indentData.oiStatus === 6) {
       str1 = "<span>\u9000\u6B3E\u9000\u8D27</span>";
     } else if (indentData.oiStatus === 0) {
       str1 = "<span>\u9000\u6B3E\u4E2D</span>";

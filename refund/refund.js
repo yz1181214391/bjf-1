@@ -22,7 +22,7 @@ $(function(){
 
     function showGoods(indentData){
         let str1 = ''
-        if(indentData.oiStatus === null){
+        if(indentData.oiStatus === 6){
             str1 =`<span>退款退货</span>`
         }else if(indentData.oiStatus === 0){
             str1 =`<span>退款中</span>`

@@ -99,12 +99,12 @@
 .indent-details:hover{
     color: red;
 }
-.indent-details1{
+.indent-delete{
     margin-right: 12px;
     color: #cfcccc;
     cursor: pointer;
 }
-.indent-details1:hover{
+.indent-delete:hover{
     color: rgb(97, 96, 96);
 }
 
@@ -171,7 +171,7 @@
     margin-top: 6px;
 }
 .consignee:hover{
-    color: coral;
+    color: black;
 }
 
 

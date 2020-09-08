@@ -1,10 +1,19 @@
 "use strict";
 
 $(function () {
-  var odDelid = 1597886410483508;
-  var oiId = 59;
-  $('.refundId').val(odDelid);
-  $('.oiId').val(oiId);
+  var userId = '';
+  var oiStatus = window.location.href.split("=")[1];
+  var oiId = window.location.href.split("=")[2];
+  console.log(oiStatus, oiId);
+
+  if (oiStatus === '3') {
+    $('.initial-box').hide();
+    console.log(oiStatus, oiId);
+  } else if (oiStatus === '4') {
+    $('.initial-box').show();
+  } // $('.oiId').val(oiId);
+
+
   var evaluateData = [{
     Id: '11',
     commodityImg: '../Img/mmexport1580082042896.jpg',
