@@ -165,6 +165,7 @@ $(function(){
 
             console.log(event.target.getAttribute('data-refund'),"退款退货");
             refundId = event.target.getAttribute('data-refund');
+
             cargoId = event.target.getAttribute('data-oiId');
             console.log(cargoId,"退款oiId")
             
@@ -269,6 +270,10 @@ $(function(){
 
         //取消退货事件
         $(".cancel-return").click(function (){
+            var odDelid = refundId;
+            var oiId = cargoId;
+            console.log(odDelid)
+            console.log(oiId)
         layer.confirm('取消退货吗？', {
                 btn: ['确认','取消'] //按钮
             }, function(){ 
@@ -276,7 +281,8 @@ $(function(){
                     url: "http://192.168.0.118:8080/order/notBack",
                     type: "GET",
                     datatype: "json",
-                    data:{"odDelid" : confirmId},
+                    data:{"odDelid" : odDelid,
+                            "oiId":oiId},
                     
                     success: function (data) {
                         console.log(data)

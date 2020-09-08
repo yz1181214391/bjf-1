@@ -256,6 +256,10 @@ $(function () {
     }); //取消退货事件
 
     $(".cancel-return").click(function () {
+      var odDelid = refundId;
+      var oiId = cargoId;
+      console.log(odDelid);
+      console.log(oiId);
       layer.confirm('取消退货吗？', {
         btn: ['确认', '取消'] //按钮
 
@@ -265,7 +269,8 @@ $(function () {
           type: "GET",
           datatype: "json",
           data: {
-            "odDelid": confirmId
+            "odDelid": odDelid,
+            "oiId": oiId
           },
           success: function success(data) {
             console.log(data);
