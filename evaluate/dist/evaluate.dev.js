@@ -1,45 +1,57 @@
 "use strict";
 
 $(function () {
-  var userId = '';
+  var uId = 12;
   var oiStatus = window.location.href.split("=")[1];
-  var oiId = window.location.href.split("=")[2];
-  console.log(oiStatus, oiId);
+  var cmdId = window.location.href.split("=")[2];
+  var oiImage = window.localStorage.getItem('oiImage');
+  var oiName = window.localStorage.getItem('oiName');
+  var odDelid = window.localStorage.getItem('odDelid');
+  $('.cmdId').val(cmdId);
+  $('.uId').val(uId);
+  $('.odDelid').val(odDelid);
+  $('.item-box').children().eq(0).attr("src", oiImage);
+  $('.item-box').children().eq(1).text(oiName);
 
   if (oiStatus === '3') {
     $('.initial-box').hide();
-    console.log(oiStatus, oiId);
+    $('.text-content').attr("name", 'eContent');
+    $('.evaluate-Img').attr("name", 'eImage');
+    $('.from-action').attr('action', 'http://192.168.0.106:8989/toBeEvaluated');
   } else if (oiStatus === '4') {
     $('.initial-box').show();
-  } // $('.oiId').val(oiId);
+    $('.choose-evaluate').hide();
+    $('.text-content').attr("name", 'eUback');
+    $('.evaluate-Img').attr("name", 'eBackImages');
+    $.ajax({
+      url: "http://192.168.0.106:8989/additionalComments",
+      type: "GET",
+      datatype: "json",
+      data: {
+        "cmdId": cmdId,
+        "uId": uId
+      },
+      success: function success(data) {
+        $(".comment-first").text(data.econtent);
+        $(".merchant").text(data.emback);
+        var dataImg = data.eimage.split("#");
+        evaluateImg(dataImg);
+      }
+    });
+    $('.from-action').attr('action', 'http://192.168.0.106:8989/additionalCommentsSubmit');
+  }
 
+  function evaluateImg(evaluateData) {
+    var str = '';
 
-  var evaluateData = [{
-    Id: '11',
-    commodityImg: '../Img/mmexport1580082042896.jpg',
-    commodityName: 'MacBook Pro 2019款 倒计时看不见哈丝丝',
-    initialContent: '',
-    initialImg: [{
-      Img: '../Img/mmexport1580082034804.jpg'
-    }, {
-      Img: '../Img/mmexport1580082034804.jpg'
-    }],
-    merchantContent: ''
-  }];
-  var str = '';
-
-  for (var i = 0; i < evaluateData.length; i++) {
-    var str2 = '';
-
-    for (var j = 0; j < evaluateData[i].initialImg.length; j++) {
-      str2 += "<img src=".concat(evaluateData[i].initialImg[j].Img, " alt=\"\">");
+    for (var j = 0; j < evaluateData.length; j++) {
+      str += "<img src=".concat(evaluateData[j], " alt=\"\">");
     }
 
     ;
-    $('.initial-img-box').html(str2);
-  }
+    $('.initial-img-box').html(str);
+  } // 退款退货框上传图片
 
-  ; // 退款退货框上传图片
 
   var num = 0;
   $(function () {
@@ -81,13 +93,12 @@ $(function () {
       $('#refund-form').ajaxSubmit(function (data) {
         console.log(data);
 
-        if (data == 1) {
+        if (data == 'success') {
           layer.msg('提交成功', {
             icon: 1
-          });
-          window.history.back();
+          }); // window.history.back();
         } else {
-          layer.msg('提交失败', {
+          layer.msg('提交失败,评论包含敏感字符,请注意文明', {
             icon: 5
           });
         }

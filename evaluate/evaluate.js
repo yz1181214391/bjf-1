@@ -1,43 +1,54 @@
 $(function(){
-    var userId = ''
-    var oiStatus = window.location.href.split("=")[1];
-    var oiId = window.location.href.split("=")[2];
-    console.log(oiStatus,oiId)
-  
+    let uId = 12;
+    let oiStatus = window.location.href.split("=")[1];
+    let cmdId = window.location.href.split("=")[2];
+    let oiImage = window.localStorage.getItem('oiImage');
+    let oiName = window.localStorage.getItem('oiName');
+    let odDelid = window.localStorage.getItem('odDelid');
+    $('.cmdId').val(cmdId);
+    $('.uId').val(uId);
+    $('.odDelid').val(odDelid);
+
+    $('.item-box').children().eq(0).attr("src",oiImage);
+    $('.item-box').children().eq(1).text(oiName);
+
     if(oiStatus === '3'){
-        $('.initial-box').hide()
-     console.log(oiStatus,oiId)
-      
+        $('.initial-box').hide();
+        $('.text-content').attr("name",'eContent');
+        $('.evaluate-Img').attr("name",'eImage');
+        $('.from-action').attr('action','http://192.168.0.106:8989/toBeEvaluated'); 
     }else if(oiStatus === '4'){
-        $('.initial-box').show()
+        $('.initial-box').show();
+        $('.choose-evaluate').hide();
+        $('.text-content').attr("name",'eUback');
+        $('.evaluate-Img').attr("name",'eBackImages');
+
+        $.ajax({
+            url: "http://192.168.0.106:8989/additionalComments",
+            type: "GET",
+            datatype: "json",
+            data:{
+                "cmdId": cmdId,
+                "uId": uId }, 
+            success: function (data) {
+              $(".comment-first").text(data.econtent);
+              $(".merchant").text(data.emback);
+
+              let dataImg=data.eimage.split("#");
+              evaluateImg(dataImg);
+            }
+        });
+
+        $('.from-action').attr('action','http://192.168.0.106:8989/additionalCommentsSubmit');
     }
-    // $('.oiId').val(oiId);
-
-
-    let  evaluateData = [
-        {   Id:'11',
-            commodityImg:'../Img/mmexport1580082042896.jpg',
-            commodityName:'MacBook Pro 2019款 倒计时看不见哈丝丝',
-            initialContent:'',
-            initialImg :[
-                {Img:'../Img/mmexport1580082034804.jpg' },
-                {Img:'../Img/mmexport1580082034804.jpg' },
-            ],
-            merchantContent:''
-        },
-         
-    ];
-   
-    let str = '';
-    for(var i = 0; i < evaluateData.length; i++){
-        let str2 = '';
-        for(var j = 0;j < evaluateData[i].initialImg.length; j++){
-            str2 += `<img src=${evaluateData[i].initialImg[j].Img} alt="">`
+  
+    function evaluateImg(evaluateData){ 
+        let str = '';
+        for(let j = 0;j < evaluateData.length; j++){
+            str += `<img src=${evaluateData[j]} alt="">`
         };
-
-        $('.initial-img-box').html(str2);
-    };
-
+        $('.initial-img-box').html(str);
+    }
 
  
     // 退款退货框上传图片
@@ -47,10 +58,10 @@ $(function(){
             $("#uploadfile").click();
         });
         $("#uploadfile").change(function(){
-            var files=$(this)[0].files[0];    //获取文件信息
+            let files=$(this)[0].files[0];    //获取文件信息
             if(files)
             {
-                var reader=new FileReader();  //调用FileReader
+                let reader=new FileReader();  //调用FileReader
                 reader.onload=function(evt){   //读取操作完成时触发。
                     if(num<3){
                        $("#image").before('<img src="" style="width:50px;height:50px;margin-right:6px;"/>').siblings().eq(num).attr('src',evt.target.result);
@@ -75,11 +86,11 @@ $(function(){
         }, function(){ 
             $('#refund-form').ajaxSubmit(function(data){
                 console.log(data)
-                if(data == 1){
+                if(data == 'success'){
                     layer.msg('提交成功', {icon: 1});
-                    window.history.back();
+                    // window.history.back();
                 }else{
-                    layer.msg('提交失败', {icon: 5});
+                    layer.msg('提交失败,评论包含敏感字符,请注意文明', {icon: 5});
                 }
             });
         }); 

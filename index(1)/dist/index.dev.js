@@ -8,12 +8,11 @@ $(function () {
 
     location.href = '../templates/a.html?key=' + res;
   });
-}); // 轮播图
+}); // 左侧导航栏
 
 $(function () {
-  // 左侧导航栏
   $.ajax({
-    url: "http://192.168.0.124:8989/homePage/getTree",
+    url: "http://192.168.0.106:8989/homePage/getTree",
     type: "GET",
     datatype: "json",
     success: function success(data) {
@@ -64,7 +63,7 @@ $(function () {
   }); //轮播图   
 
   $.ajax({
-    url: "http://192.168.0.124:8989/homePage/slideshow",
+    url: "http://192.168.0.106:8989/homePage/slideshow",
     type: "GET",
     datatype: "json",
     success: function success(data) {
@@ -100,7 +99,7 @@ $(function () {
 $(function () {
   $.ajax({
     //json地址的值
-    url: "http://192.168.0.124:8989/homePage/shouzhan",
+    url: "http://192.168.0.106:8989/homePage/shouzhan",
     type: "GET",
     datatype: "json",
     success: function success(data) {
@@ -148,7 +147,7 @@ $(function () {
 
 $(function () {
   $.ajax({
-    url: "http://192.168.0.124:8989/homePage/recommend",
+    url: "http://192.168.0.106:8989/homePage/recommend",
     type: "GET",
     datatype: "json",
     success: function success(data) {

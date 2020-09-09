@@ -76,9 +76,9 @@ $(function(){
                     }
                 }else if(indentData[i].odStatus === 2){
                     if(indentData[i].bjfOrderItems[j].oiStatus === 3){
-                        str3 = `<div class="evaluate"  data-oiStatus=${indentData[i].bjfOrderItems[j].oiStatus} data-oiId=${indentData[i].bjfOrderItems[j].oiId}>未评价</div>`
+                        str3 = `<div class="evaluate" data-odDelid=${indentData[i].odDelid} data-oiStatus=${indentData[i].bjfOrderItems[j].oiStatus} data-cmdId=${indentData[i].bjfOrderItems[j].cmdId}>未评价</div>`
                     }else if(indentData[i].bjfOrderItems[j].oiStatus === 4){
-                        str3 = `<div class="evaluate"  data-oiStatus=${indentData[i].bjfOrderItems[j].oiStatus} data-oiId=${indentData[i].bjfOrderItems[j].oiId}>追加评价</div>`
+                        str3 = `<div class="evaluate" data-odDelid=${indentData[i].odDelid}  data-oiStatus=${indentData[i].bjfOrderItems[j].oiStatus} data-cmdId=${indentData[i].bjfOrderItems[j].cmdId}>追加评价</div>`
                     }else if(indentData[i].bjfOrderItems[j].oiStatus === 5){
                         str3 = `<div>已评价</div>`
                     }
@@ -143,7 +143,8 @@ $(function(){
 
         // 事件代理获取当前点击按钮所对应的订单数据
         var odDelid ="";//订单编号
-        var oiId = "";//商品ID
+        var oiId = "";//订单详情ID
+        var cmdId = "";//订单详情ID
         var oiStatus = "";//判断是评论还是追评
         $('.indent-list').click(function(e){
             var event = e || window.event;  // 兼容性处理
@@ -151,7 +152,10 @@ $(function(){
             odDelid = event.target.getAttribute('data-odDelid');
 
             oiId = event.target.getAttribute('data-oiId');
-            console.log(oiId,"商品id");
+            console.log(oiId,"订单详情id");
+
+            cmdId = event.target.getAttribute('data-cmdId');
+            console.log(cmdId,"商品id");
 
             oiStatus = event.target.getAttribute('data-oiStatus');
             console.log(oiStatus,"评论还是追评")
@@ -160,7 +164,8 @@ $(function(){
         //点击订单详情按钮跳转订单详情页
         $(".indent-details").on("click",function(){
             setTimeout(function(){
-                window.top.location.href = '../Order-details/details.html?id='+ odDelid; 
+                // window.top.location.href = '../Order-details/details.html?id='+ odDelid; 
+             
             },0);           
         }); 
         //删除订单事件
@@ -274,11 +279,21 @@ $(function(){
             },0);
         });
         //未评价/追加评价
-        $('.evaluate').on("click",function(){
-            //  userId /oiId /oiStatus  
+        $('.evaluate').on("click",function(e){
+            //  userId /cmdId /oiStatus  
             setTimeout(function(){
-                console.log(oiId,oiStatus)
-                window.top.location.href = "../evaluate/evaluate.html?id="+ oiStatus +'=' + oiId; 
+                let test = $(e.target).parent().prevAll().eq(2).children()
+                let Img = test.eq(0).attr("src");
+                let Name = test.eq(1).children().eq(0).text()
+
+                window.localStorage.setItem('oiImage',Img)
+                window.localStorage.setItem('oiName',Name)
+                window.localStorage.setItem('odDelid',odDelid)
+
+                // console.log(Img)
+                // console.log(oiName)
+                // console.log(oiId,oiStatus)
+                window.top.location.href = "../evaluate/evaluate.html?id="+ oiStatus +'=' + cmdId; 
             },0); 
         })
         

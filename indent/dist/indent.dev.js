@@ -82,9 +82,9 @@ $(function () {
           }
         } else if (indentData[i].odStatus === 2) {
           if (indentData[i].bjfOrderItems[j].oiStatus === 3) {
-            str3 = "<div class=\"evaluate\"  data-oiStatus=".concat(indentData[i].bjfOrderItems[j].oiStatus, " data-oiId=").concat(indentData[i].bjfOrderItems[j].oiId, ">\u672A\u8BC4\u4EF7</div>");
+            str3 = "<div class=\"evaluate\" data-odDelid=".concat(indentData[i].odDelid, " data-oiStatus=").concat(indentData[i].bjfOrderItems[j].oiStatus, " data-cmdId=").concat(indentData[i].bjfOrderItems[j].cmdId, ">\u672A\u8BC4\u4EF7</div>");
           } else if (indentData[i].bjfOrderItems[j].oiStatus === 4) {
-            str3 = "<div class=\"evaluate\"  data-oiStatus=".concat(indentData[i].bjfOrderItems[j].oiStatus, " data-oiId=").concat(indentData[i].bjfOrderItems[j].oiId, ">\u8FFD\u52A0\u8BC4\u4EF7</div>");
+            str3 = "<div class=\"evaluate\" data-odDelid=".concat(indentData[i].odDelid, "  data-oiStatus=").concat(indentData[i].bjfOrderItems[j].oiStatus, " data-cmdId=").concat(indentData[i].bjfOrderItems[j].cmdId, ">\u8FFD\u52A0\u8BC4\u4EF7</div>");
           } else if (indentData[i].bjfOrderItems[j].oiStatus === 5) {
             str3 = "<div>\u5DF2\u8BC4\u4EF7</div>";
           }
@@ -120,7 +120,9 @@ $(function () {
 
     var odDelid = ""; //订单编号
 
-    var oiId = ""; //商品ID
+    var oiId = ""; //订单详情ID
+
+    var cmdId = ""; //订单详情ID
 
     var oiStatus = ""; //判断是评论还是追评
 
@@ -130,14 +132,15 @@ $(function () {
       console.log(event.target.getAttribute('data-odDelid'), "订单编号");
       odDelid = event.target.getAttribute('data-odDelid');
       oiId = event.target.getAttribute('data-oiId');
-      console.log(oiId, "商品id");
+      console.log(oiId, "订单详情id");
+      cmdId = event.target.getAttribute('data-cmdId');
+      console.log(cmdId, "商品id");
       oiStatus = event.target.getAttribute('data-oiStatus');
       console.log(oiStatus, "评论还是追评");
     }); //点击订单详情按钮跳转订单详情页
 
     $(".indent-details").on("click", function () {
-      setTimeout(function () {
-        window.top.location.href = '../Order-details/details.html?id=' + odDelid;
+      setTimeout(function () {// window.top.location.href = '../Order-details/details.html?id='+ odDelid; 
       }, 0);
     }); //删除订单事件
 
@@ -283,11 +286,19 @@ $(function () {
       }, 0);
     }); //未评价/追加评价
 
-    $('.evaluate').on("click", function () {
-      //  userId /oiId /oiStatus  
+    $('.evaluate').on("click", function (e) {
+      //  userId /cmdId /oiStatus  
       setTimeout(function () {
-        console.log(oiId, oiStatus);
-        window.top.location.href = "../evaluate/evaluate.html?id=" + oiStatus + '=' + oiId;
+        var test = $(e.target).parent().prevAll().eq(2).children();
+        var Img = test.eq(0).attr("src");
+        var Name = test.eq(1).children().eq(0).text();
+        window.localStorage.setItem('oiImage', Img);
+        window.localStorage.setItem('oiName', Name);
+        window.localStorage.setItem('odDelid', odDelid); // console.log(Img)
+        // console.log(oiName)
+        // console.log(oiId,oiStatus)
+
+        window.top.location.href = "../evaluate/evaluate.html?id=" + oiStatus + '=' + cmdId;
       }, 0);
     });
   }
